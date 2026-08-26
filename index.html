@@ -2,70 +2,72 @@
 <html lang="fa" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<meta name="theme-color" content="#07090e">
 
 <title>یک پیام از تو برای تو</title>
 
-
 <style>
 
-/* =========================================
-   تنظیمات اصلی
-========================================= */
+/* =====================================================
+   تنظیمات پایه
+===================================================== */
 
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
-
     width: 100%;
     height: 100%;
-
     margin: 0;
     padding: 0;
-
     overflow: hidden;
 }
 
-
 body {
-
-    font-family:
-        Tahoma,
-        Arial,
-        sans-serif;
-
-    background: #080a10;
-
+    font-family: Tahoma, Arial, sans-serif;
+    background: #050609;
     color: #f7f2e8;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: manipulation;
 }
 
 
-/* =========================================
-   صفحات
-========================================= */
+/* =====================================================
+   سیستم صفحات
+===================================================== */
 
 .page {
 
     position: fixed;
 
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
-    padding: 25px;
+    padding: 25px 22px 105px;
 
     opacity: 0;
 
@@ -73,11 +75,12 @@ body {
 
     pointer-events: none;
 
+    overflow: hidden;
+
     transition:
         opacity 0.8s ease,
         visibility 0.8s ease;
 }
-
 
 .page.active {
 
@@ -88,401 +91,673 @@ body {
     pointer-events: auto;
 }
 
-
 .content {
+
+    position: relative;
+
+    z-index: 5;
 
     width: 100%;
 
-    max-width: 700px;
+    max-width: 720px;
 
     text-align: center;
 }
 
 
-/* =========================================
-   صفحه اول
-========================================= */
+/* =====================================================
+   نور عمومی پس‌زمینه
+===================================================== */
+
+.page::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 70vw;
+    height: 70vw;
+
+    max-width: 500px;
+    max-height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.09),
+            transparent 70%
+        );
+
+    filter: blur(12px);
+
+    animation:
+        breathing 6s ease-in-out infinite;
+}
+
+
+/* =====================================================
+   صفحه ۱
+===================================================== */
 
 .page-start {
 
     background:
-
         radial-gradient(
-            circle at center,
-            #18243a 0%,
-            #0d111b 45%,
-            #05060a 100%
+            circle at 50% 35%,
+            #203250 0%,
+            #111927 40%,
+            #07090e 75%,
+            #030407 100%
         );
 }
 
+.page-start::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: -50%;
+    left: -80%;
+
+    width: 250%;
+    height: 200%;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 35%,
+            rgba(255,255,255,0.035) 50%,
+            transparent 65%
+        );
+
+    animation:
+        lightSweep 8s ease-in-out infinite;
+}
 
 .main-title {
 
     font-size:
-        clamp(
-            30px,
-            8vw,
-            52px
-        );
+        clamp(30px, 8vw, 52px);
 
     line-height: 1.5;
 
-    margin-bottom: 35px;
+    margin-bottom: 32px;
+
+    letter-spacing: -1px;
+
+    opacity: 0;
 
     animation:
-        fadeUp 1.4s ease forwards;
+        titleIn 1.3s ease forwards;
 }
-
 
 .details {
 
     font-size:
-        clamp(
-            19px,
-            5vw,
-            28px
-        );
+        clamp(19px, 5vw, 28px);
 
-    line-height: 2.1;
+    line-height: 2.05;
+
+    opacity: 0;
 
     animation:
-        fadeUp 1.8s ease forwards;
+        fadeUp 1.3s ease 0.4s forwards;
 }
 
 
-/* =========================================
-   صفحه معرفی
-========================================= */
+/* =====================================================
+   صفحه ۲
+===================================================== */
 
 .page-intro {
 
     background:
-
         radial-gradient(
-            circle at 50% 45%,
-            #1b2b47 0%,
-            #0c111b 55%,
-            #05060a 100%
+            circle at center,
+            #294263 0%,
+            #111b2b 50%,
+            #05070b 100%
         );
 }
 
+.page-intro::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 160vw;
+    height: 160vw;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.04);
+
+    border-radius: 50%;
+
+    animation:
+        slowRotate 30s linear infinite;
+}
 
 .intro-text {
 
     font-size:
-        clamp(
-            21px,
-            5.7vw,
-            34px
-        );
+        clamp(21px, 5.5vw, 34px);
 
-    line-height: 2;
+    line-height: 1.95;
 
     max-width: 650px;
 
     margin: auto;
 }
 
-
 .intro-line {
 
     opacity: 0;
 
     transform:
-        translateY(15px);
+        translateY(20px);
 }
-
 
 .page-intro.active
 .intro-line:nth-child(1) {
 
     animation:
-        fadeUp
-        0.8s
-        0.3s
-        forwards;
+        fadeUp 0.8s ease 0.2s forwards;
 }
-
 
 .page-intro.active
 .intro-line:nth-child(2) {
 
     animation:
-        fadeUp
-        0.8s
-        1s
-        forwards;
+        fadeUp 0.8s ease 0.8s forwards;
 }
-
 
 .page-intro.active
 .intro-line:nth-child(3) {
 
     animation:
-        fadeUp
-        0.8s
-        1.7s
-        forwards;
+        fadeUp 0.8s ease 1.5s forwards;
 }
-
 
 .page-intro.active
 .intro-line:nth-child(4) {
 
     animation:
-        fadeUp
-        0.8s
-        2.6s
-        forwards;
+        fadeUp 0.8s ease 2.3s forwards;
 }
 
 
-/* =========================================
-   صفحات ۱۰ مرحله
-========================================= */
+/* =====================================================
+   شماره صفحات
+===================================================== */
 
 .reason-number {
 
     font-size:
-        clamp(
-            18px,
-            4.5vw,
-            25px
-        );
+        clamp(18px, 4.5vw, 25px);
 
-    opacity: 0.7;
+    opacity: 0.72;
 
-    margin-bottom: 40px;
+    margin-bottom: 38px;
+
+    animation:
+        fadeUp 0.8s ease forwards;
 }
-
 
 .reason-text {
 
     font-size:
-        clamp(
-            24px,
-            6.5vw,
-            42px
-        );
+        clamp(24px, 6.2vw, 42px);
 
     line-height: 1.9;
+
+    opacity: 0;
+
+    animation:
+        textIn 1s ease 0.2s forwards;
 }
 
 
-/* =========================================
+/* =====================================================
    دلیل ۱
-========================================= */
+===================================================== */
 
 .reason-1 {
 
     background:
-
         linear-gradient(
             145deg,
-            #11151c,
-            #2a2d30
+            #10141a,
+            #303439
         );
 }
 
-
-.reason-1::before {
+.reason-1::after {
 
     content: "";
 
     position: absolute;
 
-    width: 80%;
+    inset: -20%;
 
-    height: 60%;
-
-    opacity: 0.08;
+    opacity: 0.07;
 
     background:
-
         repeating-linear-gradient(
-            155deg,
-            transparent 0px,
-            transparent 17px,
-            white 18px,
-            transparent 19px
+            150deg,
+            transparent 0 24px,
+            white 25px,
+            transparent 26px
         );
 
-    transform:
-        rotate(-8deg);
+    transform: rotate(-7deg);
+
+    animation:
+        sketch 12s linear infinite;
 }
 
 
-/* =========================================
+/* =====================================================
    دلیل ۲
-========================================= */
+===================================================== */
 
 .reason-2 {
 
     background:
-
         radial-gradient(
             circle,
-            #efe5d3,
-            #cfc1aa
+            #f0e5d2,
+            #cbbba0
         );
 
     color: #29251f;
 }
 
+.reason-2::after {
 
-/* =========================================
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0.12;
+
+    background:
+        radial-gradient(
+            circle,
+            white 0 2px,
+            transparent 3px
+        );
+
+    background-size: 50px 50px;
+
+    animation:
+        particles 12s linear infinite;
+}
+
+
+/* =====================================================
    دلیل ۳
-========================================= */
+===================================================== */
 
 .reason-3 {
 
     background:
-
         radial-gradient(
             circle at 50% 80%,
-            #1c4b75,
-            #07111d 70%
+            #27628f,
+            #0b2944 45%,
+            #050b13 85%
         );
 }
 
+.reason-3::after {
 
-/* =========================================
+    content: "";
+
+    position: absolute;
+
+    bottom: -25%;
+
+    left: -25%;
+
+    width: 150%;
+
+    height: 65%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(100,180,240,0.15),
+            transparent 65%
+        );
+
+    animation:
+        wave 7s ease-in-out infinite;
+}
+
+
+/* =====================================================
    دلیل ۴
-========================================= */
+===================================================== */
 
 .reason-4 {
 
     background:
-
         linear-gradient(
             180deg,
-            #08090c,
-            #291d12
+            #07080b,
+            #2c1c10
         );
 }
 
+.reason-4::after {
 
-/* =========================================
+    content: "";
+
+    position: absolute;
+
+    width: 2px;
+
+    height: 80%;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(255,190,110,0.45),
+            transparent
+        );
+
+    transform: rotate(25deg);
+
+    animation:
+        lightBeam 5s ease-in-out infinite;
+}
+
+
+/* =====================================================
    دلیل ۵
-========================================= */
+===================================================== */
 
 .reason-5 {
 
-    background: #eee8dd;
+    background:
+        linear-gradient(
+            135deg,
+            #f2ede4,
+            #d9d0c0
+        );
 
     color: #25221e;
 }
 
+.reason-5::after {
 
-/* =========================================
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0.15;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 5px,
+            rgba(80,60,40,0.025) 6px
+        );
+}
+
+
+/* =====================================================
    دلیل ۶
-========================================= */
+===================================================== */
 
 .reason-6 {
 
     background:
-
         radial-gradient(
             circle,
-            #263f65,
-            #080b11
+            #2a4d79,
+            #08101b 72%
         );
 }
 
+.reason-6::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0.4;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,0.12) 1px,
+            transparent 2px
+        );
+
+    background-size: 55px 55px;
+
+    animation:
+        stars 15s linear infinite;
+}
 
 .counter {
 
     font-size:
-        clamp(
-            60px,
-            18vw,
-            110px
-        );
+        clamp(62px, 18vw, 110px);
 
     font-weight: bold;
 
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+
+    text-shadow:
+        0 0 30px
+        rgba(255,255,255,0.25);
+
+    animation:
+        counterPulse 1.4s ease-in-out infinite;
 }
 
 
-/* =========================================
+/* =====================================================
    دلیل ۷
-========================================= */
+===================================================== */
 
 .reason-7 {
 
-    background: #000;
+    background:
+        radial-gradient(
+            circle,
+            #141414,
+            #000 72%
+        );
+}
+
+.reason-7::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 0 0 45px
+        rgba(255,255,255,0.015),
+
+        0 0 0 90px
+        rgba(255,255,255,0.008);
+
+    animation:
+        expanding 5s ease-in-out infinite;
 }
 
 
-/* =========================================
+/* =====================================================
    دلیل ۸
-========================================= */
+===================================================== */
 
 .reason-8 {
 
     background:
-
         linear-gradient(
             120deg,
-            #0b1018,
-            #263d50
+            #09121c,
+            #294a60
         );
 }
 
+.reason-8::after {
 
-/* =========================================
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            125deg,
+            transparent 30%,
+            rgba(255,255,255,0.07),
+            transparent 70%
+        );
+
+    animation:
+        horizon 8s ease-in-out infinite;
+}
+
+
+/* =====================================================
    دلیل ۹
-========================================= */
+===================================================== */
 
 .reason-9 {
 
     background: #000;
 }
 
+.reason-9::after {
 
-/* =========================================
-   دلیل ۱۰
-========================================= */
+    content: "";
+
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 0 35px 12px
+        rgba(255,255,255,0.3);
+
+    animation:
+        starPulse 3s ease-in-out infinite;
+}
+
+
+/* =====================================================
+   صفحه آخر
+===================================================== */
 
 .reason-10 {
 
     background:
-
         radial-gradient(
-            circle,
-            #fff4df,
-            #e8d5b5
+            circle at center,
+            #fff8ea,
+            #f0ddbd 45%,
+            #d6b98b 100%
         );
 
     color: #211a13;
 }
 
+.reason-10::before {
+
+    width: 120vw;
+    height: 120vw;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.55),
+            transparent 65%
+        );
+
+    animation:
+        finalGlow 3s ease-in-out infinite;
+}
+
+.reason-10::after {
+
+    content:
+        "✦   ✧   ✦   ✧   ✦";
+
+    position: absolute;
+
+    top: 12%;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 25px;
+
+    letter-spacing: 18px;
+
+    opacity: 0.35;
+
+    animation:
+        sparkle 2s ease-in-out infinite;
+}
 
 .birthday {
 
     font-size:
-        clamp(
-            40px,
-            11vw,
-            72px
-        );
+        clamp(40px, 11vw, 72px);
 
     line-height: 1.6;
 
     font-weight: bold;
 
+    text-shadow:
+        0 3px 15px
+        rgba(80,50,20,0.15);
+
     animation:
-        birthday
-        1.5s
-        ease
+        birthdayIn 1.6s
+        cubic-bezier(.17,.67,.35,1.4)
         forwards;
 }
 
 
-/* =========================================
+/* =====================================================
    دکمه‌ها
-========================================= */
+===================================================== */
 
 .next-button {
 
@@ -490,204 +765,462 @@ body {
 
     left: 50%;
 
-    bottom:
-        calc(
-            25px +
-            env(safe-area-inset-bottom)
-        );
+    bottom: 24px;
 
     transform:
         translateX(-50%);
 
     min-width: 120px;
 
-    height: 62px;
+    height: 58px;
 
-    padding:
-        0 18px;
+    padding: 0 20px;
 
     border:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            0.5
-        );
+        rgba(255,255,255,0.45);
+
+    border-radius: 8px;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            0.06
-        );
+        rgba(255,255,255,0.08);
 
     color: inherit;
 
     font-family: inherit;
 
     font-size:
-        clamp(
-            18px,
-            5vw,
-            26px
-        );
+        clamp(18px, 5vw, 25px);
 
-    cursor: pointer;
+    z-index: 30;
+
+    box-shadow:
+        0 7px 25px
+        rgba(0,0,0,0.25);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    opacity: 0;
+
+    animation:
+        buttonIn 0.9s ease 0.7s forwards;
+
+    touch-action: manipulation;
 
     transition:
-        transform 0.2s ease,
-        background 0.2s ease;
+        transform 0.15s ease,
+        background 0.15s ease;
 }
-
 
 .next-button:active {
 
     transform:
         translateX(-50%)
-        scale(0.94);
+        scale(0.92);
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            0.15
-        );
+        rgba(255,255,255,0.18);
 }
 
 
-/* =========================================
+/* =====================================================
    انیمیشن‌ها
-========================================= */
+===================================================== */
 
 @keyframes fadeUp {
 
     from {
-
         opacity: 0;
-
-        transform:
-            translateY(20px);
+        transform: translateY(22px);
     }
 
     to {
-
         opacity: 1;
-
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 }
 
-
-@keyframes birthday {
+@keyframes textIn {
 
     from {
-
         opacity: 0;
-
         transform:
-            scale(0.7);
+            translateY(25px)
+            scale(0.98);
     }
 
     to {
-
         opacity: 1;
-
         transform:
+            translateY(0)
             scale(1);
     }
 }
 
+@keyframes titleIn {
 
-/* =========================================
-   موبایل
-========================================= */
+    from {
+        opacity: 0;
+        transform:
+            scale(0.92)
+            translateY(15px);
+    }
 
-@media (max-width: 480px) {
+    to {
+        opacity: 1;
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+@keyframes buttonIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(-50%)
+            translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+}
+
+@keyframes breathing {
+
+    0%,
+    100% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes lightSweep {
+
+    0% {
+        transform: translateX(-30%);
+    }
+
+    50% {
+        transform: translateX(30%);
+    }
+
+    100% {
+        transform: translateX(-30%);
+    }
+}
+
+@keyframes slowRotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes sketch {
+
+    from {
+        transform:
+            rotate(-7deg)
+            translateX(-20px);
+    }
+
+    to {
+        transform:
+            rotate(-7deg)
+            translateX(40px);
+    }
+}
+
+@keyframes particles {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(50px);
+    }
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        transform:
+            translateX(-5%)
+            scaleY(0.9);
+    }
+
+    50% {
+        transform:
+            translateX(5%)
+            scaleY(1.1);
+    }
+}
+
+@keyframes lightBeam {
+
+    0% {
+        opacity: 0;
+        transform:
+            translateY(-50%)
+            rotate(25deg);
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translateY(70%)
+            rotate(25deg);
+    }
+}
+
+@keyframes stars {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(60px);
+    }
+}
+
+@keyframes counterPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.045);
+    }
+}
+
+@keyframes expanding {
+
+    0% {
+        transform: scale(0.6);
+        opacity: 0.2;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(0.6);
+        opacity: 0.2;
+    }
+}
+
+@keyframes horizon {
+
+    0% {
+        transform: translateX(-45%);
+    }
+
+    50% {
+        transform: translateX(45%);
+    }
+
+    100% {
+        transform: translateX(-45%);
+    }
+}
+
+@keyframes starPulse {
+
+    0% {
+        transform: scale(0.5);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.5);
+        opacity: 0.3;
+    }
+}
+
+@keyframes finalGlow {
+
+    0%,
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0.2;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: translateY(8px);
+    }
+}
+
+@keyframes birthdayIn {
+
+    from {
+        opacity: 0;
+        transform:
+            scale(0.65)
+            rotate(-3deg);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            scale(1)
+            rotate(0);
+    }
+}
+
+
+/* =====================================================
+   نمایشگرهای کوچک سامسونگ
+===================================================== */
+
+@media (max-width: 390px) {
 
     .page {
-
-        padding: 20px;
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-bottom: 100px;
     }
-
 
     .reason-text {
-
+        font-size: 23px;
         line-height: 1.8;
     }
-
 
     .intro-text {
-
+        font-size: 20px;
         line-height: 1.8;
     }
 
-
     .next-button {
-
+        height: 56px;
         min-width: 115px;
+    }
+}
 
-        height: 60px;
+
+/* =====================================================
+   حالت افقی
+===================================================== */
+
+@media (orientation: landscape)
+       and (max-height: 500px) {
+
+    .page {
+        padding:
+            15px 30px 80px;
     }
 
+    .main-title {
+        margin-bottom: 12px;
+        font-size: 30px;
+    }
+
+    .details {
+        font-size: 17px;
+        line-height: 1.5;
+    }
+
+    .reason-number {
+        margin-bottom: 15px;
+    }
+
+    .reason-text {
+        font-size: 23px;
+        line-height: 1.5;
+    }
+
+    .next-button {
+        bottom: 12px;
+        height: 48px;
+    }
 }
 
 </style>
-
 </head>
 
 
 <body>
 
 
-<!-- ==================================================
+<!-- =====================================================
      صفحه ۱
-================================================== -->
+===================================================== -->
 
 <section class="page page-start active">
 
     <div class="content">
 
         <div class="main-title">
-
             یک پیام از تو برای تو
-
         </div>
-
 
         <div class="details">
 
             <div>
-
                 فرستنده: لیلا
-
             </div>
-
 
             <div>
-
                 تاریخ: ۱۴۲۵/۰۶/۰۴
-
             </div>
-
 
             <br>
 
-
             <div>
-
                 گیرنده: لیلا
-
             </div>
 
-
             <div>
-
                 تاریخ: ۱۴۰۵/۰۶/۰۴
-
             </div>
 
         </div>
@@ -695,24 +1228,20 @@ body {
     </div>
 
 
-    <!-- دکمه جدید صفحه اول -->
-
     <button
         class="next-button"
         onclick="goTo(1)"
     >
-
         بازکردن نامه
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      صفحه ۲
-================================================== -->
+===================================================== -->
 
 <section class="page page-intro">
 
@@ -720,34 +1249,21 @@ body {
 
         <div class="intro-text">
 
-
             <div class="intro-line">
-
                 سلام
-
             </div>
 
-
             <div class="intro-line">
-
                 احتمالا میگی این دیگه چیه؟
-
             </div>
 
-
             <div class="intro-line">
-
                 این یه نامه از طرف خودته، فقط ۲۰ سال بزرگتر شدی و اینو واسه ۲۰ سال قبلت فرستادی.
-
             </div>
-
 
             <div class="intro-line">
-
                 حرف‌هایی دارم که باید یادت بمونه.
-
             </div>
-
 
         </div>
 
@@ -758,34 +1274,27 @@ body {
         class="next-button"
         onclick="goTo(2)"
     >
-
         بزن بریم
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۱
-================================================== -->
+<!-- =====================================================
+     صفحه ۳ — متن ۱
+===================================================== -->
 
 <section class="page reason-1">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۱ از ۱۰
-
         </div>
 
-
         <div class="reason-text">
-
             من اینجام چون وقتی اولین بار نقاشیت خراب شد، کنار نکشیدی.
-
         </div>
 
     </div>
@@ -795,34 +1304,27 @@ body {
         class="next-button"
         onclick="goTo(3)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۲
-================================================== -->
+<!-- =====================================================
+     صفحه ۴ — متن ۲
+===================================================== -->
 
 <section class="page reason-2">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۲ از ۱۰
-
         </div>
 
-
         <div class="reason-text">
-
             من اینجام چون به هنرت و استعدادت باور داشتی.
-
         </div>
 
     </div>
@@ -832,34 +1334,27 @@ body {
         class="next-button"
         onclick="goTo(4)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۳
-================================================== -->
+<!-- =====================================================
+     صفحه ۵ — متن ۳
+===================================================== -->
 
 <section class="page reason-3">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۳ از ۱۰
-
         </div>
 
-
         <div class="reason-text">
-
             من اینجام چون به خودت و توانایی‌هات اعتماد کردی.
-
         </div>
 
     </div>
@@ -869,34 +1364,27 @@ body {
         class="next-button"
         onclick="goTo(5)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۴
-================================================== -->
+<!-- =====================================================
+     صفحه ۶ — متن ۴
+===================================================== -->
 
 <section class="page reason-4">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۴ از ۱۰
-
         </div>
 
-
         <div class="reason-text">
-
             من اینجام چون برای رویاهایت با همه وجودت تلاش کردی.
-
         </div>
 
     </div>
@@ -906,34 +1394,27 @@ body {
         class="next-button"
         onclick="goTo(6)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۵
-================================================== -->
+<!-- =====================================================
+     صفحه ۷ — متن ۵
+===================================================== -->
 
 <section class="page reason-5">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۵ از ۱۰
-
         </div>
 
-
         <div class="reason-text">
-
             هر زمانی که طرحی رو شروع کردی، بهتر از دفعه قبل تمومش کردی.
-
         </div>
 
     </div>
@@ -943,39 +1424,31 @@ body {
         class="next-button"
         onclick="goTo(7)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۶
-================================================== -->
+<!-- =====================================================
+     صفحه ۸ — متن ۶
+===================================================== -->
 
 <section class="page reason-6">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۶ از ۱۰
-
         </div>
-
 
         <div
             class="counter"
             id="counter"
         >
-
             ۱۰
-
         </div>
-
 
         <div class="reason-text">
 
@@ -994,29 +1467,24 @@ body {
         class="next-button"
         onclick="goTo(8)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۷
-================================================== -->
+<!-- =====================================================
+     صفحه ۹ — متن ۷
+===================================================== -->
 
 <section class="page reason-7">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۷ از ۱۰
-
         </div>
-
 
         <div class="reason-text">
 
@@ -1031,29 +1499,24 @@ body {
         class="next-button"
         onclick="goTo(9)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۸
-================================================== -->
+<!-- =====================================================
+     صفحه ۱۰ — متن ۸
+===================================================== -->
 
 <section class="page reason-8">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۸ از ۱۰
-
         </div>
-
 
         <div class="reason-text">
 
@@ -1076,29 +1539,24 @@ body {
         class="next-button"
         onclick="goTo(10)"
     >
-
         بعدی
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۹
-================================================== -->
+<!-- =====================================================
+     صفحه ۱۱ — متن ۹
+===================================================== -->
 
 <section class="page reason-9">
 
     <div class="content">
 
         <div class="reason-number">
-
             ۹ از ۱۰
-
         </div>
-
 
         <div class="reason-text">
 
@@ -1117,18 +1575,16 @@ body {
         class="next-button"
         onclick="goTo(11)"
     >
-
         بزن بریم
-
     </button>
 
 </section>
 
 
 
-<!-- ==================================================
-     دلیل ۱۰
-================================================== -->
+<!-- =====================================================
+     صفحه ۱۲ — متن ۱۰
+===================================================== -->
 
 <section class="page reason-10">
 
@@ -1156,103 +1612,127 @@ body {
 
 <script>
 
-
-/* =========================================
-   مدیریت صفحات
-========================================= */
+/* =====================================================
+   کنترل صفحات
+===================================================== */
 
 const pages =
     document.querySelectorAll(".page");
 
+let currentPage = 0;
+
 
 function goTo(pageNumber) {
 
-    pages.forEach(
+    if (
+        pageNumber < 0 ||
+        pageNumber >= pages.length
+    ) {
+        return;
+    }
 
+
+    currentPage =
+        pageNumber;
+
+
+    pages.forEach(
         (page, index) => {
 
             page.classList.toggle(
-
                 "active",
-
                 index === pageNumber
-
             );
 
         }
-
     );
 
 
-    /* =====================================
-       انیمیشن عدد صفحه ۶
-    ===================================== */
-
     if (pageNumber === 7) {
 
-        const counter =
-            document.getElementById(
-                "counter"
-            );
-
-
-        const numbers = [
-
-            "۱۰",
-            "۲۰",
-            "۵۰",
-            "۱۰۰",
-            "۱۵۰",
-            "۲۰۰+"
-
-        ];
-
-
-        let index = 0;
-
-
-        counter.textContent =
-            numbers[0];
-
-
-        const animation =
-            setInterval(
-
-                () => {
-
-                    index++;
-
-
-                    if (
-                        index >=
-                        numbers.length
-                    ) {
-
-                        clearInterval(
-                            animation
-                        );
-
-                        return;
-
-                    }
-
-
-                    counter.textContent =
-                        numbers[index];
-
-                },
-
-                350
-
-            );
+        animateCounter();
 
     }
 
 }
 
 
-</script>
+/* =====================================================
+   شمارنده صفحه ۶
+===================================================== */
 
+let counterTimer = null;
+
+
+function animateCounter() {
+
+    const counter =
+        document.getElementById("counter");
+
+
+    if (!counter) {
+        return;
+    }
+
+
+    if (counterTimer) {
+
+        clearInterval(
+            counterTimer
+        );
+
+    }
+
+
+    const numbers = [
+        "۱۰",
+        "۲۰",
+        "۵۰",
+        "۱۰۰",
+        "۱۵۰",
+        "۲۰۰+"
+    ];
+
+
+    let index = 0;
+
+
+    counter.textContent =
+        numbers[0];
+
+
+    counterTimer =
+        setInterval(
+
+            function() {
+
+                index++;
+
+
+                if (
+                    index >=
+                    numbers.length
+                ) {
+
+                    clearInterval(
+                        counterTimer
+                    );
+
+                    return;
+                }
+
+
+                counter.textContent =
+                    numbers[index];
+
+            },
+
+            400
+
+        );
+}
+
+</script>
 
 </body>
 
