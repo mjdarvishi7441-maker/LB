@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>یک پیام از تو برای تو</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #080a10;
+            color: #f7f2e8;
+        }
+
+        /* -------------------------
+           ساختار صفحات
+        ------------------------- */
+
+        .page {
+            position: fixed;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+
+            transition:
+                opacity 0.8s ease,
+                visibility 0.8s ease;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+
+        /* -------------------------
+           صفحه اول
+        ------------------------- */
+
+        .page-start {
+            background:
+                radial-gradient(
+                    circle at center,
+                    #18243a 0%,
+                    #0d111b 45%,
+                    #05060a 100%
+                );
+        }
+
+        .main-title {
+            font-size: clamp(30px, 8vw, 52px);
+            line-height: 1.5;
+            margin-bottom: 35px;
+
+            animation: fadeUp 1.5s ease forwards;
+        }
+
+        .details {
+            font-size: clamp(19px, 5vw, 28px);
+            line-height: 2.1;
+
+            animation: fadeUp 2s ease forwards;
+        }
+
+
+        /* -------------------------
+           صفحه معرفی
+        ------------------------- */
+
+        .page-intro {
+            background:
+                radial-gradient(
+                    circle at 50% 45%,
+                    #1b2b47 0%,
+                    #0c111b 55%,
+                    #05060a 100%
+                );
+        }
+
+        .intro-text {
+            font-size: clamp(21px, 5.7vw, 34px);
+            line-height: 2;
+
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .intro-line {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .page-intro.active .intro-line:nth-child(1) {
+            animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+
+        .page-intro.active .intro-line:nth-child(2) {
+            animation: fadeUp 0.8s ease 1s forwards;
+        }
+
+        .page-intro.active .intro-line:nth-child(3) {
+            animation: fadeUp 0.8s ease 1.7s forwards;
+        }
+
+        .page-intro.active .intro-line:nth-child(4) {
+            animation: fadeUp 0.8s ease 2.6s forwards;
+        }
+
+
+        /* -------------------------
+           صفحات دلایل
+        ------------------------- */
+
+        .reason-number {
+            font-size: clamp(18px, 4.5vw, 25px);
+            opacity: 0.7;
+            margin-bottom: 40px;
+        }
+
+        .reason-text {
+            font-size: clamp(24px, 6.5vw, 42px);
+            line-height: 1.9;
+        }
+
+        .page.active .reason-number {
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .page.active .reason-text {
+            animation: fadeUp 1.1s ease 0.25s forwards;
+        }
+
+
+        /* -------------------------
+           دلیل ۱
+        ------------------------- */
+
+        .reason-1 {
+            background:
+                linear-gradient(
+                    145deg,
+                    #11151c,
+                    #2a2d30
+                );
+        }
+
+        .reason-1::before {
+            content: "";
+
+            position: absolute;
+
+            width: 80%;
+            height: 60%;
+
+            opacity: 0.08;
+
+            background:
+                repeating-linear-gradient(
+                    155deg,
+                    transparent 0px,
+                    transparent 17px,
+                    white 18px,
+                    transparent 19px
+                );
+
+            transform: rotate(-8deg);
+        }
+
+
+        /* -------------------------
+           دلیل ۲
+        ------------------------- */
+
+        .reason-2 {
+            background:
+                radial-gradient(
+                    circle,
+                    #efe5d3,
+                    #cfc1aa
+                );
+
+            color: #29251f;
+        }
+
+
+        /* -------------------------
+           دلیل ۳
+        ------------------------- */
+
+        .reason-3 {
+            background:
+                radial-gradient(
+                    circle at 50% 80%,
+                    #1c4b75,
+                    #07111d 70%
+                );
+        }
+
+
+        /* -------------------------
+           دلیل ۴
+        ------------------------- */
+
+        .reason-4 {
+            background:
+                linear-gradient(
+                    180deg,
+                    #08090c,
+                    #291d12
+                );
+        }
+
+
+        /* -------------------------
+           دلیل ۵
+        ------------------------- */
+
+        .reason-5 {
+            background: #eee8dd;
+            color: #25221e;
+        }
+
+
+        /* -------------------------
+           دلیل ۶
+        ------------------------- */
+
+        .reason-6 {
+            background:
+                radial-gradient(
+                    circle,
+                    #263f65,
+                    #080b11
+                );
+        }
+
+        .counter {
+            font-size: clamp(60px, 18vw, 110px);
+            font-weight: bold;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* -------------------------
+           دلیل ۷
+        ------------------------- */
+
+        .reason-7 {
+            background: #000;
+        }
+
+
+        /* -------------------------
+           دلیل ۸
+        ------------------------- */
+
+        .reason-8 {
+            background:
+                linear-gradient(
+                    120deg,
+                    #0b1018,
+                    #263d50
+                );
+        }
+
+
+        /* -------------------------
+           دلیل ۹
+        ------------------------- */
+
+        .reason-9 {
+            background: #000;
+        }
+
+
+        /* -------------------------
+           دلیل ۱۰
+        ------------------------- */
+
+        .reason-10 {
+            background:
+                radial-gradient(
+                    circle,
+                    #fff4df,
+                    #e8d5b5
+                );
+
+            color: #211a13;
+        }
+
+        .birthday {
+            font-size: clamp(40px, 11vw, 72px);
+            line-height: 1.6;
+            font-weight: bold;
+
+            animation: birthday 1.5s ease forwards;
+        }
+
+
+        /* -------------------------
+           دکمه
+        ------------------------- */
+
+        .next-button {
+            position: absolute;
+
+            left: 50%;
+
+            bottom:
+                calc(
+                    25px +
+                    env(safe-area-inset-bottom)
+                );
+
+            transform: translateX(-50%);
+
+            width: 110px;
+            height: 62px;
+
+            border: 1px solid rgba(255,255,255,0.5);
+
+            background: rgba(255,255,255,0.06);
+
+            color: inherit;
+
+            font-family: inherit;
+
+            font-size: clamp(18px, 5vw, 26px);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .next-button:active {
+            transform:
+                translateX(-50%)
+                scale(0.94);
+
+            background:
+                rgba(255,255,255,0.15);
+        }
+
+
+        /* -------------------------
+           انیمیشن‌ها
+        ------------------------- */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        @keyframes birthday {
+
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+        }
+
+
+        /* -------------------------
+           موبایل
+        ------------------------- */
+
+        @media (max-width: 480px) {
+
+            .page {
+                padding: 20px;
+            }
+
+            .reason-text {
+                line-height: 1.8;
+            }
+
+            .intro-text {
+                line-height: 1.8;
+            }
+
+            .next-button {
+                width: 105px;
+                height: 60px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     صفحه ۱
+================================================== -->
+
+<section class="page page-start active">
+
+    <div class="content">
+
+        <div class="main-title">
+            یک پیام از تو برای تو
+        </div>
+
+        <div class="details">
+
+            <div>
+                فرستنده: لیلا
+            </div>
+
+            <div>
+                تاریخ: ۱۴۲۵/۰۶/۰۴
+            </div>
+
+            <br>
+
+            <div>
+                گیرنده: لیلا
+            </div>
+
+            <div>
+                تاریخ: ۱۴۰۵/۰۶/۰۴
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     صفحه ۲
+================================================== -->
+
+<section class="page page-intro">
+
+    <div class="content">
+
+        <div class="intro-text">
+
+            <div class="intro-line">
+                سلام
+            </div>
+
+            <div class="intro-line">
+                احتمالا میگی این دیگه چیه؟
+            </div>
+
+            <div class="intro-line">
+                این یه نامه از طرف خودته، فقط ۲۰ سال بزرگتر شدی و اینو واسه ۲۰ سال قبلت فرستادی.
+            </div>
+
+            <div class="intro-line">
+                حرف‌هایی دارم که باید یادت بمونه.
+            </div>
+
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(2)"
+    >
+        بزن بریم
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۱
+================================================== -->
+
+<section class="page reason-1">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۱ از ۱۰
+        </div>
+
+        <div class="reason-text">
+            من اینجام چون وقتی اولین بار نقاشیت خراب شد، کنار نکشیدی.
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(3)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۲
+================================================== -->
+
+<section class="page reason-2">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۲ از ۱۰
+        </div>
+
+        <div class="reason-text">
+            من اینجام چون به هنرت و استعدادت باور داشتی.
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(4)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۳
+================================================== -->
+
+<section class="page reason-3">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۳ از ۱۰
+        </div>
+
+        <div class="reason-text">
+            من اینجام چون به خودت و توانایی‌هات اعتماد کردی.
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(5)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۴
+================================================== -->
+
+<section class="page reason-4">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۴ از ۱۰
+        </div>
+
+        <div class="reason-text">
+            من اینجام چون برای رویاهایت با همه وجودت تلاش کردی.
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(6)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۵
+================================================== -->
+
+<section class="page reason-5">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۵ از ۱۰
+        </div>
+
+        <div class="reason-text">
+            هر زمانی که طرحی رو شروع کردی، بهتر از دفعه قبل تمومش کردی.
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(7)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۶
+================================================== -->
+
+<section class="page reason-6">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۶ از ۱۰
+        </div>
+
+        <div
+            class="counter"
+            id="counter"
+        >
+            ۱۰
+        </div>
+
+        <div class="reason-text">
+
+            توی زمانی که تو هستی، ۱۰ نفر هنرجو داری.
+
+            <br><br>
+
+            اما الان، توی مجموعه هنری خودت، بیشتر از ۲۰۰ نفر هنرجو داری و چند استاد که یه زمانی هنرجوهای خودت بودن.
+
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(8)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۷
+================================================== -->
+
+<section class="page reason-7">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۷ از ۱۰
+        </div>
+
+        <div class="reason-text">
+
+            همه اینا نتیجه اینه که هیچ وقت پا پس نکشیدی و پرقدرت ادامه دادی 💪🏼
+
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(9)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۸
+================================================== -->
+
+<section class="page reason-8">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۸ از ۱۰
+        </div>
+
+        <div class="reason-text">
+
+            هنوز جاهایی هست که ندیدی.
+
+            <br><br>
+
+            راه‌هایی هست که نرفتی.
+
+            <br><br>
+
+            و موفقیت‌هایی در پیش داری که هنوز آرزوشون نکردی.
+
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(10)"
+    >
+        بعدی
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۹
+================================================== -->
+
+<section class="page reason-9">
+
+    <div class="content">
+
+        <div class="reason-number">
+            ۹ از ۱۰
+        </div>
+
+        <div class="reason-text">
+
+            نوبتی هم باشه نوبت اصل مطلبه 😎
+
+            <br><br>
+
+            حاضری؟
+
+        </div>
+
+    </div>
+
+    <button
+        class="next-button"
+        onclick="goTo(11)"
+    >
+        بزن بریم
+    </button>
+
+</section>
+
+
+
+<!-- ==================================================
+     دلیل ۱۰
+================================================== -->
+
+<section class="page reason-10">
+
+    <div class="content">
+
+        <div class="birthday">
+
+            🥳
+
+            <br>
+
+            تولدت مبارک
+
+            <br>
+
+            🥳
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+    const pages =
+        document.querySelectorAll(".page");
+
+
+    function goTo(pageNumber) {
+
+        pages.forEach(
+            (page, index) => {
+
+                page.classList.toggle(
+                    "active",
+                    index === pageNumber
+                );
+
+            }
+        );
+
+
+        /* انیمیشن عدد صفحه ۶ */
+
+        if (pageNumber === 7) {
+
+            const counter =
+                document.getElementById("counter");
+
+            const numbers = [
+                "۱۰",
+                "۲۰",
+                "۵۰",
+                "۱۰۰",
+                "۱۵۰",
+                "۲۰۰+"
+            ];
+
+            let index = 0;
+
+            counter.textContent =
+                numbers[0];
+
+
+            const animation =
+                setInterval(() => {
+
+                    index++;
+
+                    if (
+                        index >=
+                        numbers.length
+                    ) {
+
+                        clearInterval(animation);
+
+                        return;
+
+                    }
+
+                    counter.textContent =
+                        numbers[index];
+
+                }, 350);
+
+            }
+
+        }
+
+</script>
+
+
+</body>
+</html>
